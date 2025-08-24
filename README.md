@@ -1,1 +1,92 @@
-# SQL-Challenge
+# 📊 SQL Challenge – Employee Database Analysis
+
+This project is part of a data engineering/analysis challenge designed to demonstrate proficiency with **PostgreSQL**, **SQL schema design**, and **data querying**.  
+
+The goal was to:
+- **Design and implement a relational database** from scratch.
+- **Model relationships** between employees, salaries, departments, and managers.
+- **Write and execute SQL queries** to extract meaningful insights.
+- Apply **best practices** for database normalization, indexing, and performance optimization.
+
+This project replicates a realistic HR database scenario that you might encounter in a data analytics or engineering role.
+
+---
+
+## 📂 Project Structure
+SQL-Challenge/
+│── schema.sql # Database schema (tables, keys, constraints)
+
+│── queries.sql # Data analysis queries
+
+│── ERD.png # Entity Relationship Diagram of the schema
+
+│── README.md # You're here!
+
+
+---
+
+## 🛠️ Technologies Used
+- **PostgreSQL** (Database engine)
+- **SQL (DDL & DML)** for schema and queries
+- **Entity Relationship Diagrams (ERDs)** for schema visualization
+- **GitHub** for version control and project documentation
+
+---
+
+## 🏗️ Database Schema
+The database consists of six tables with proper **primary keys, foreign keys, and constraints**:
+
+- **employees** – Employee details (name, birth date, sex, hire date, title ID)
+- **titles** – Job titles
+- **salaries** – Employee salaries
+- **departments** – Company departments
+- **dept_emp** – Relationship between employees and departments
+- **dept_manager** – Department managers
+
+📌 An **ERD** was created to visualize table relationships.
+
+---
+
+## 📊 Example Queries
+Some example business questions answered using SQL:
+
+- List employee details with salaries:
+
+```sql
+   SELECT employees.emp_no, employees.last_name, employees.first_name, employees.sex, salaries.salary
+   FROM employees
+   JOIN salaries
+   ON employees.emp_no = salaries.emp_no;
+```
+- List employees hired in 1986:
+
+```sql
+   SELECT first_name, last_name
+   FROM employees
+   WHERE hire_date BETWEEN '12/31/1985' AND '1/1/1987'
+```
+
+- List the managers of each department:
+
+```sql
+   SELECT departments.dept_no, departments.dept_name, dept_manager.emp_no, employees.last_name, employees.first_name
+   FROM departments
+   JOIN dept_manager
+   ON departments.dept_no = dept_manager.dept_no
+   JOIN employees
+   ON dept_manager.emp_no = employees.emp_no;
+```
+
+- Count employees by last name (frequency analysis):
+
+```sql
+   SELECT last_name,
+   COUNT(last_name) AS "last_name_counts"
+   FROM employees
+   GROUP BY last_name
+   ORDER BY
+   COUNT(last_name) DESC;
+   ```
+
+---
+
